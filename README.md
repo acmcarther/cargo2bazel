@@ -1,6 +1,6 @@
 # Cargo2Bazel Rules for Bazel
 
-Note: This ruleset is currently a work in progress and may be incomplete. 
+Note: This ruleset is currently a work in progress and may be incomplete.
 
 The current README is speculative.
 
@@ -14,7 +14,7 @@ Suppose you have a `Cargo.toml` matching the following:
 
 ```toml
 [package]
-...
+#...
 
 [dependencies]
 regex = "0.4.16"
@@ -23,7 +23,7 @@ regex = "0.4.16"
 which cargo converts into the following (approximate)`Cargo.lock`:
 ```toml
 [root]
-...
+#...
 
 # Many omitted
 
@@ -65,13 +65,11 @@ After adding a cargo2bazel rule into your WORKSPACE folder, you can access decla
 rust_library(
     name = "foo",
     deps = [
-      @cargo2bazel//my_toml:regex,
+      "@cargo2bazel//my_toml:regex",
     ],
 )
 ```
 
+# Caveats
+
 You *only* have access to explicit dependencies -- not any transitive dependencies.
-
-After modifying your Cargo.toml, use cargo to update the Cargo.lock file. Bazel will then update your third-party packages automatically.
-
-
