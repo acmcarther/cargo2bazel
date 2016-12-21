@@ -70,6 +70,6 @@ rust_library(
 )
 ```
 
-# Caveats
+## Caveats
 
 You *only* have access to explicit dependencies -- not any transitive dependencies.
