@@ -44,7 +44,7 @@ licenses(["notice"])
 rust_library(
     name = "{0}",
     deps = {1},
-    srcs = glob(["src/**/*.rs"])
+    srcs = glob(["lib.rs", "src/**/*.rs"])
 )
 """
 
