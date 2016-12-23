@@ -1,6 +1,8 @@
+load("@subpar//:subpar.bzl", "par_binary")
+
 package(default_visibility = ["//visibility:public"])
 
-py_binary(
+par_binary(
     name = "cargo2bazel",
     deps = [
         "@toml//:toml",
