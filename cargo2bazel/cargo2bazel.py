@@ -156,7 +156,7 @@ def main():
       if package.as_dependency().__hash__() in root_deps_hashset:
         # We need to expose this pkg
         root_path = output_path + "/third_party/cargo2bazel/{0}/".format(package.name)
-        if not os.path.exists(expected_path):
+        if not os.path.exists(root_path):
           os.makedirs(root_path)
         build_file = open(root_path + "BUILD", 'w')
         build_file.write(alias_file_template.format(package.name, package.version))
