@@ -1,0 +1,47 @@
+workspace(name = "io_bazel_cargo2bazel")
+
+local_repository(
+    name = "examples",
+    path = "examples",
+)
+
+git_repository(
+    name = "io_bazel_rules_rust",
+    remote = "https://github.com/acmcarther/rules_rust.git",
+    commit = "63317d7"
+)
+load("@io_bazel_rules_rust//rust:rust.bzl", "rust_repositories")
+
+rust_repositories()
+
+new_git_repository(
+    name = "toml",
+    remote = "https://github.com/uiri/toml.git",
+    tag = "0.9.2",
+    build_file_content = """
+package(default_visibility = ["//visibility:public"])
+
+py_library(
+  name = "toml",
+  srcs = [
+    "toml.py",
+    "setup.py",
+  ],
+)""",
+)
+
+new_git_repository(
+    name = "wget",
+    remote = "https://github.com/steveeJ/python-wget.git",
+    commit = "fdd3a0f8404ccab90f939f9952af139e6c55142a",
+    build_file_content = """
+package(default_visibility = ["//visibility:public"])
+
+py_library(
+  name = "wget",
+  srcs = [
+    "wget.py",
+    "setup.py",
+  ],
+)""",
+)
