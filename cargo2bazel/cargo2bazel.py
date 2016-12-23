@@ -91,6 +91,9 @@ def main():
     bazel_packages = list(map(Package.from_config, packages))
     remote_packages = list(filter(lambda pkg: pkg.source != None, bazel_packages))
     tar_dump_path = output_path + "/third_party/cargo2bazel/"
+    if not os.path.exists(tar_dump_path):
+      os.makedirs(tar_dump_path)
+
     for package in remote_packages:
       url = "https://crates.io/api/v1/crates/{0}/{1}/download".format(
           package.name,
