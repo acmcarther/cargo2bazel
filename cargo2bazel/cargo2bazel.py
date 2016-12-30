@@ -63,6 +63,7 @@ class Package:
     self.version = version
     self.dependencies = dependencies
 
+  @staticmethod
   def from_config(config_package):
     name = config_package['name']
     source = config_package.get('source', None)
@@ -89,6 +90,7 @@ class Dependency:
     self.version = version
     self.source = source
 
+  @staticmethod
   def from_config(config_dependency):
     components = config_dependency.split()
     name = components[0]
