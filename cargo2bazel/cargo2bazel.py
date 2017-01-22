@@ -44,7 +44,10 @@ licenses(["notice"])
 rust_library(
     name = "{0}",
     deps = {1},
-    srcs = glob(["lib.rs", "src/**/*.rs"])
+    srcs = glob(["lib.rs", "src/**/*.rs"]),
+    rustc_flags = [
+      "--cap-lints warn",
+    ],
 )
 """
 
