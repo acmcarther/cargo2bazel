@@ -2,6 +2,9 @@ import sys
 from toml import toml
 from warnings import warn
 
+# An ugly hack to work around the inability to parse or handle [target.*.dependencies] config
+BANNED_TARGET_DEPENDENCIES = ["redox_syscall"]
+
 class CargoLock:
     def __init__(self, loaded_toml):
         self.root = CargoLock_Package(loaded_toml['root'])
@@ -33,12 +36,22 @@ class CargoToml:
         self.package = CargoToml_Package(loaded_toml['package'])
         self.features = CargoToml_Features({})
         self.dependencies = []
+        self.target = []
 
         if 'features' in loaded_toml:
             self.features = CargoToml_Features(loaded_toml['features'])
 
         if 'dependencies' in loaded_toml:
             self.dependencies = map(CargoToml_Dependency, loaded_toml['dependencies'].iteritems())
+
+        if 'target' in loaded_toml:
+            all_deps_for_all_targets = []
+            for deps in loaded_toml['target'].values():
+                all_deps_for_all_targets.extend(deps['dependencies'].iteritems())
+
+            deduped_all_deps_for_all_targets = set(all_deps_for_all_targets)
+            deduped_all_deps_for_all_targets = filter(lambda dep: dep[0] not in BANNED_TARGET_DEPENDENCIES, deduped_all_deps_for_all_targets)
+            self.dependencies.extend(map(CargoToml_Dependency, list(deduped_all_deps_for_all_targets)))
 
 
 
