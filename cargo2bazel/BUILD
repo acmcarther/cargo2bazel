@@ -7,6 +7,15 @@ par_binary(
     deps = [
         "@toml//:toml",
         "@wget//:wget",
+        ":cargo_toml",
     ],
-    srcs = ["cargo2bazel.py"]
+    srcs = ["cargo2bazel.py"],
+)
+
+par_binary(
+    name = "cargo_toml",
+    deps = [
+        "@toml//:toml",
+    ],
+    srcs = ["cargo_toml.py"]
 )
