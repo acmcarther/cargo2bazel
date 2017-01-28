@@ -236,7 +236,7 @@ def add_aliases(gen_root, root_cargo_toml_dependencies, root_cargo_lock_dependen
                 lock_dependency.version,
                 toml_dependency.features,
                 toml_dependency.default_features).get_key()
-        target_path = "//third_party/cargo2bazel/internal/{1}/{2}:{3}".format(
+        target_path = "//third_party/cargo2bazel/internal/{0}/{1}:{2}".format(
                 package_key,
                 variant_key,
                 toml_dependency.name)
