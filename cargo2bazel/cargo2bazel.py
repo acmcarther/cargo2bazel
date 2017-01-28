@@ -193,7 +193,7 @@ class PackageVariant:
     def get_key(self):
         key = "{0}".format(hash(str(self.features)))
         if self.use_defaults:
-            key = "default+" + key
+            key = "default-" + key
         return key
 
 def add_build_rules(gen_root_internal, distinct_variants, dependency_toml_map, dependency_lock_map):
