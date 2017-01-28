@@ -243,7 +243,7 @@ def add_aliases(gen_root, root_cargo_toml_dependencies, root_cargo_lock_dependen
                 toml_dependency.name)
         alias_file_path = '{0}{1}'.format(
                 gen_root,
-                package_key)
+                toml_dependency.name)
         if not os.path.exists(alias_file_path):
           os.makedirs(alias_file_path)
         build_file = open(alias_file_path + '/BUILD', 'w')
