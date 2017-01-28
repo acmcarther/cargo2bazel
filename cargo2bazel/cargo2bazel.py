@@ -53,7 +53,7 @@ rust_library(
 
 
 def main():
-    assert len(sys.argv) is 4, "expected to receive the cargo.lock, the cargo.toml, and the codegen directory as arguments"
+    assert len(sys.argv) >= 4, "expected to receive the cargo.lock, the cargo.toml, and the codegen directory as arguments"
     toml_path = sys.argv[1]
     lock_path = sys.argv[2]
     codegen_dir = sys.argv[3]
