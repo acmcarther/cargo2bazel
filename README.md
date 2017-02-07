@@ -1,5 +1,6 @@
 # Cargo2Bazel Rules for Bazel
-Note: This ruleset is currently a work in progress and may be incomplete.
+### WARNING: Not production ready! Use at your own peril!
+### Seriously, there are no tests. At your own peril!
 
 It is currently implemented as a python utility, instead of a ruleset because of limitations importing external python code into a build rule.
 
