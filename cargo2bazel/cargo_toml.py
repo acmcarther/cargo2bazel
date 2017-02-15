@@ -77,7 +77,7 @@ class CargoToml_Features:
         self.default_flags = []
         if 'default' in loaded_toml:
             self.default_flags = loaded_toml['default']
-        self.flags_to_dependencies = dict(filter(lambda x: (x[0] is not 'default'), loaded_toml.iteritems()))
+        self.flags_to_dependencies = dict(filter(lambda x: (x[0] != 'default'), loaded_toml.iteritems()))
 
 class CargoToml_Dependency:
     def __init__(self, kv_pair):

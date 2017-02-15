@@ -183,16 +183,22 @@ def identify_dependencies(cargo_toml, cargo_lock, variant):
     if variant.use_defaults:
         used_features.extend(cargo_toml.features.default_flags)
     for feature in used_features:
-        new_dependencies = cargo_toml.features.flags_to_dependencies.get(feature)
+        new_dependencies = cargo_toml.features.flags_to_dependencies.get(feature) 
+        if new_dependencies is None:
+            new_dependencies = []
+
+        # Strip "wanted flags" off of
+        # TODO(issue/11): Support these flags correctly
+        new_dependencies_less_flags = map(lambda s: s.split('/')[0], new_dependencies)
 
         if new_dependencies is not None:
-            optional_dependencies.extend(new_dependencies)
+            optional_dependencies.extend(new_dependencies_less_flags)
 
     selected_optional_dependencies = set(optional_dependencies)
 
     dependencies = []
     for toml_dependency in cargo_toml.dependencies:
-        if not toml_dependency.optional or toml_dependency.name in selected_optional_dependencies:
+        if not toml_dependency.optional or toml_dependency.name in selected_optional_dependencies or toml_dependency.name in used_features:
             lock_dependency = lock_dependencies_by_name[toml_dependency.name]
             package_key = "{0}-{1}".format(toml_dependency.name, lock_dependency.version)
             dependency_variant = PackageVariant(toml_dependency.name, lock_dependency.version, toml_dependency.features, toml_dependency.default_features)
