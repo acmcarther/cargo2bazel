@@ -49,11 +49,10 @@ class CargoToml:
             for deps in loaded_toml['target'].values():
                 all_deps_for_all_targets.extend(deps['dependencies'].iteritems())
 
-            deduped_all_deps_for_all_targets = set(all_deps_for_all_targets)
-            deduped_all_deps_for_all_targets = filter(lambda dep: dep[0] not in BANNED_TARGET_DEPENDENCIES, deduped_all_deps_for_all_targets)
-            self.dependencies.extend(map(CargoToml_Dependency, list(deduped_all_deps_for_all_targets)))
-
-
+            all_deps_for_all_targets = filter(lambda dep: dep[0] not in BANNED_TARGET_DEPENDENCIES, all_deps_for_all_targets)
+            deps_as_dep_objs = map(CargoToml_Dependency, list(all_deps_for_all_targets))
+            self.dependencies.extend(deps_as_dep_objs)
+            self.dependencies = list(set(self.dependencies))
 
 class CargoToml_Package:
     def __init__(self, loaded_toml):
@@ -103,6 +102,19 @@ class CargoToml_Dependency:
 
             if 'features' in props:
                 self.features = props['features']
+
+    def __eq__(self, other):
+        return self.name == other.name\
+                and self.optional == other.optional\
+                and self.default_features == other.default_features\
+                and self.version_spec == other.version_spec
+
+    def __hash__(self):
+        if self.name == "objc":
+            print hash((self.name, self.optional, self.default_features, frozenset(self.features), self.version_spec))
+        return hash((self.name, self.optional, self.default_features, frozenset(self.features), self.version_spec))
+
+
 
 def main():
     assert len(sys.argv) is 2, "expected to receive an argument"
