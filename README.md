@@ -2,6 +2,8 @@
 ### WARNING: Not production ready! Use at your own peril!
 ### Seriously, there are no tests. At your own peril!
 
+####My toy gamedev project, [next_space_coop](https://github.com/acmcarther/next_space_coop) shows what this looks like in practice. Take a look at the [//third_party/cargo2bazel/ folder](https://github.com/acmcarther/next_space_coop/tree/master/third_party/cargo2bazel)
+
 It is currently implemented as a python utility, instead of a ruleset because of limitations importing external python code into a build rule.
 
 ## Overview
